@@ -1,0 +1,29 @@
+{
+    "name": "Sure Petcare Pet Status",
+    "author": "HerzScheisse",
+    "description": "Display the Sure Petcare pet status.",
+    "template": "<style>\n\t.pet-imgage img {\n\t\tborder-radius: 20%;\n\t\theight: 110px;\n\t\tvertical-align: top;\n\t\tmargin-bottom: 10px;\n\t}\n\t.left {\n\t\ttext-align: left;\n  \twhite-space: nowrap;\n\t}\n\t.value {\n\t\ttext-align: right;\n  \twhite-space: nowrap;\n\t}\n\t.btn {\n\t\tmargin-bottom: 2px;\n\t}\n\t.row {\n\t\tmargin: 2px;\n\t}\n</style>\n<div style=\"position: absolute; left: 0; top: 0; width: 100%; height: 100%; padding: 10px;\">\n\t<widget-icon iconset=\"config.background_iconset\" icon=\"config.background\" backdrop=\"true\"></widget-icon>\n</div>\n<div class=\"h3\">{{getItem('SurePet_Name_' + config.petnum.toString()).label}} {{itemState('SurePet_Name_' + config.petnum.toString())}}</div>\n<div class=\"pet-imgage\"><img src=\"{{itemState('SurePet_Photo_' + config.petnum.toString())}}\"/></div>\n<div class=\"btn-group\">\n\t<button type=\"button\" class=\"btn btn-primary active\" ng-if=\"{true: 'disabled'}[itemState('SurePet_Where_' + config.petnum.toString(), true)!='2']\" ng-click=\"sendCmd('SurePet_WhereCommand_' + config.petnum.toString(), 'OUTSIDE')\">SET OUTSIDE</button>\n\t<button type=\"button\" class=\"btn btn-primary active\" ng-if=\"{true: 'disabled'}[itemState('SurePet_Where_' + config.petnum.toString(), true)!='1']\" ng-click=\"sendCmd('SurePet_WhereCommand_' + config.petnum.toString(), 'INSIDE')\">SET INSIDE</button>\n</div>\n<div class=\"row\">\n\t<div class=\"col-xs-2 left\">{{getItem('SurePet_Where_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-4 value\">{{itemState('SurePet_Where_' + config.petnum.toString())}}</div>\n\t<div class=\"col-xs-2 left\">{{getItem('SurePet_Since_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-4 value\">{{itemState('SurePet_Since_' + config.petnum.toString()) | date:\"EEE HH:mm\"}}</div>\n</div>\n<div class=\"row\">\n\t<div class=\"col-xs-7 left\">{{getItem('SurePet_EnteredThrough_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-5 value\">{{itemState('SurePet_EnteredThrough_' + config.petnum.toString())}}</div>\n</div>\n<div class=\"row\">\n\t<div class=\"col-xs-3 left\">{{getItem('SurePet_Gender_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-3 value\">{{itemState('SurePet_Gender_' + config.petnum.toString())}}</div>\n\t<div class=\"col-xs-2 left\">{{getItem('SurePet_Weight_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-4 value\">{{itemState('SurePet_Weight_' + config.petnum.toString())}} kg</div>\n</div>\n<div class=\"row\">\n\t<div class=\"col-xs-3 left\">{{getItem('SurePet_Birthday_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-9 value\">{{itemState('SurePet_Birthday_' + config.petnum.toString()) | date:\"EEE d. MMMM yyyy\"}}</div>\n</div>\n<div class=\"row\">\n\t<div class=\"col-xs-4 left\">{{getItem('SurePet_Breed_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-8 value\">{{itemState('SurePet_Breed_' + config.petnum.toString())}}</div>\n</div>\n<div class=\"row\">\n\t<div class=\"col-xs-4 left\">{{getItem('SurePet_FoodType_' + config.petnum.toString()).label}}</div>\n\t<div class=\"col-xs-8 value\"><div class=\"value\">{{itemState('SurePet_FoodType_' + config.petnum.toString())}}</div></div>\n</div>\n<div ng-if=\"config.feeder\">\n\t<div class=\"row\">\n\t\t<div class=\"col-xs-6 left\">{{getItem('SurePet_FeedAt_' + config.petnum.toString()).label}}</div>\n\t\t<div class=\"col-xs-6 value\"><div class=\"value\">{{itemState('SurePet_FeedAt_' + config.petnum.toString()) | date:\"EEE HH:mm\"}}</div></div>\n\t</div>\n\t\t<div class=\"row\" ng-if=\"{true: 'enabled'}[itemState('SurePet_FeederBowlsType_' + config.petnum.toString(), true)=='1']\">\n\t\t<div class=\"col-xs-6 left\">{{getItem('SurePet_FeedChangeLeft_' + config.petnum.toString()).label}}</div>\n\t\t<div class=\"col-xs-6 value\"><div class=\"value\">{{itemState('SurePet_FeedChangeLeft_' + config.petnum.toString())}}g</div></div>\n\t</div>\n\t\t<div class=\"row\" ng-if=\"{true: 'enabled'}[itemState('SurePet_FeederBowlsType_' + config.petnum.toString(), true)=='4']\">\n\t\t<div class=\"col-xs-4 left\">{{getItem('SurePet_FeedChangeLeft_' + config.petnum.toString()).label}}</div>\n\t\t<div class=\"col-xs-3 value\"><div class=\"value\">{{itemState('SurePet_FeedChangeLeft_' + config.petnum.toString())}}g</div></div>\n\t\t<div class=\"col-xs-2 left\">{{getItem('SurePet_FeedChangeRight_' + config.petnum.toString()).label}}</div>\n\t\t<div class=\"col-xs-3 value\"><div class=\"value\">{{itemState('SurePet_FeedChangeRight_' + config.petnum.toString())}}g</div></div>\n\t</div>\n</div>\n",
+    "settings": [
+        {
+            "type": "number",
+            "id": "petnum",
+            "label": "Pet Number",
+            "default": "1",
+            "description": "the last digit of your pet item in your .items file ( 1 - for the first pet, 2 - for the second pet, etc.)"
+        },
+        {
+            "type": "icon",
+            "id": "background",
+            "label": "Background Icon",
+            "description": "This is the Background Icon. f.e. you could use \"Builtin: Smart Home Set\" and then choose \"pet\""
+        },
+        {
+            "type": "checkbox",
+            "id": "feeder",
+            "label": "Feeder Device",
+            "default": "0",
+            "choices": "1=yes",
+            "description": "Activate the checkbox if you have the cat feeder device."
+        }
+    ]
+}
